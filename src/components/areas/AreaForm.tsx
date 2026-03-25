@@ -170,16 +170,17 @@ export function AreaForm({ area, onSubmit, isLoading = false }: AreaFormProps) {
       </Card>
 
       {/* Ações do formulário */}
-      <div className="flex justify-end gap-4">
+      <div className="flex flex-col sm:flex-row justify-end gap-3">
         <Button
           type="button"
           variant="outline"
           onClick={() => navigate(-1)}
           disabled={isLoading}
+          className="w-full sm:w-auto"
         >
           Cancelar
         </Button>
-        <Button type="submit" disabled={isLoading}>
+        <Button type="submit" disabled={isLoading} className="w-full sm:w-auto">
           {isLoading
             ? 'Salvando...'
             : area

@@ -40,7 +40,7 @@ export default function AreaFormPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto max-w-2xl py-6 px-4 space-y-6">
+      <div className="w-full max-w-2xl mx-auto py-6 px-3 sm:px-4 space-y-6">
         <Skeleton className="h-8 w-64" />
         <Skeleton className="h-96 w-full" />
       </div>
@@ -48,7 +48,7 @@ export default function AreaFormPage() {
   }
 
   return (
-    <div className="container mx-auto max-w-2xl py-6 px-4">
+    <div className="w-full max-w-2xl mx-auto py-6 px-3 sm:px-4">
       <AreaForm area={area} onSubmit={handleSubmit} isLoading={isSubmitting} />
     </div>
   );

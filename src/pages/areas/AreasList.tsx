@@ -93,17 +93,17 @@ export default function AreasList() {
   };
 
   return (
-    <div className="container mx-auto max-w-6xl py-6 px-4">
+    <div className="w-full max-w-6xl mx-auto py-6 px-3 sm:px-4">
       {/* Page Header */}
       <div className="mb-6">
-        <h1 className="text-3xl font-bold">Áreas de Vida</h1>
-        <p className="text-muted-foreground mt-1">
+        <h1 className="text-2xl sm:text-3xl font-bold">Áreas de Vida</h1>
+        <p className="text-muted-foreground mt-1 text-sm sm:text-base">
           Gerencie as categorias da sua vida
         </p>
       </div>
 
       {/* Toolbar */}
-      <div className="flex flex-col sm:flex-row gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row gap-3 mb-6">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
@@ -117,7 +117,7 @@ export default function AreasList() {
           value={filter}
           onValueChange={(v) => setFilter(v as AreaFilter)}
         >
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-full sm:w-[180px]">
             <SelectValue placeholder="Filtrar por status" />
           </SelectTrigger>
           <SelectContent>
@@ -126,7 +126,10 @@ export default function AreasList() {
             <SelectItem value="inactive">Inativas</SelectItem>
           </SelectContent>
         </Select>
-        <Button onClick={() => navigate('/areas/new')}>
+        <Button
+          onClick={() => navigate('/areas/new')}
+          className="w-full sm:w-auto"
+        >
           <Plus className="w-4 h-4 mr-2" />
           Nova Área
         </Button>
@@ -134,7 +137,7 @@ export default function AreasList() {
 
       {/* Loading State */}
       {isLoading && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {[1, 2, 3, 4].map((i) => (
             <div key={i} className="space-y-3">
               <Skeleton className="h-32 w-full" />
@@ -155,7 +158,7 @@ export default function AreasList() {
 
       {/* Areas Grid */}
       {!isLoading && filteredAreas.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {filteredAreas.map((area) => (
             <AreaCard
               key={area.id}

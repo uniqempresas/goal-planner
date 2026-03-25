@@ -10,7 +10,7 @@ export default function MainLayout() {
   const { collapsed, toggle } = useSidebarState();
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 overflow-x-hidden">
       <Header onMenuClick={() => setMobileMenuOpen(true)} />
 
       <div className="flex">
@@ -31,7 +31,7 @@ export default function MainLayout() {
 
         {/* Main Content */}
         <main
-          className={`flex-1 min-h-[calc(100vh-4rem)] pb-16 transition-all duration-300 ${
+          className={`flex-1 w-full min-h-[calc(100vh-4rem)] pb-16 transition-all duration-300 ${
             collapsed ? 'lg:ml-[72px]' : 'lg:ml-[260px]'
           }`}
         >

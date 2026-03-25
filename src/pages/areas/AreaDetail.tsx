@@ -128,7 +128,7 @@ export default function AreaDetail() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto max-w-4xl py-6 px-4 space-y-6">
+      <div className="w-full max-w-4xl mx-auto py-6 px-3 sm:px-4 space-y-6">
         <Skeleton className="h-8 w-64" />
         <Skeleton className="h-48 w-full" />
         <Skeleton className="h-32 w-full" />
@@ -138,7 +138,7 @@ export default function AreaDetail() {
 
   if (!area) {
     return (
-      <div className="container mx-auto max-w-4xl py-6 px-4">
+      <div className="w-full max-w-4xl mx-auto py-6 px-3 sm:px-4">
         <EmptyState
           title="Área não encontrada"
           message="A área que você está procurando não existe ou foi removida."
@@ -180,7 +180,7 @@ export default function AreaDetail() {
   };
 
   return (
-    <div className="container mx-auto max-w-4xl py-6 px-4">
+    <div className="w-full max-w-4xl mx-auto py-6 px-3 sm:px-4">
       {/* Breadcrumb */}
       <Breadcrumb className="mb-6">
         <BreadcrumbList>
@@ -195,31 +195,37 @@ export default function AreaDetail() {
       </Breadcrumb>
 
       {/* Header */}
-      <div className="flex items-start justify-between mb-6">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-col sm:flex-row items-start justify-between gap-4 mb-6">
+        <div className="flex items-start gap-3 sm:gap-4 w-full">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => navigate('/areas')}
+            className="flex-shrink-0"
           >
             <ArrowLeft className="w-4 h-4" />
           </Button>
           <div className="flex items-center gap-3">
             <div
-              className="p-3 rounded-lg"
+              className="p-2 sm:p-3 rounded-lg"
               style={{ backgroundColor: `${area.color}20` }}
             >
               <IconComponent
-                className="w-6 h-6"
+                className="w-5 h-5 sm:w-6 sm:h-6"
                 style={{ color: area.color }}
               />
             </div>
             <div>
-              <h1 className="text-2xl font-bold" style={{ color: area.color }}>
+              <h1
+                className="text-xl sm:text-2xl font-bold"
+                style={{ color: area.color }}
+              >
                 {area.name}
               </h1>
               {area.description && (
-                <p className="text-muted-foreground mt-1">{area.description}</p>
+                <p className="text-muted-foreground mt-1 text-sm">
+                  {area.description}
+                </p>
               )}
               <p className="text-sm text-muted-foreground mt-2">
                 Criada em: {formatDate(area.createdAt)}
@@ -227,61 +233,73 @@ export default function AreaDetail() {
             </div>
           </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 w-full sm:w-auto">
           <Button
             variant="outline"
             onClick={() => navigate(`/areas/${area.id}/edit`)}
+            className="flex-1 sm:flex-none"
           >
             <Pencil className="w-4 h-4 mr-2" />
-            Editar
+            <span className="hidden sm:inline">Editar</span>
           </Button>
           <Button
             variant="destructive"
             onClick={() => setDeleteModalOpen(true)}
+            className="flex-1 sm:flex-none"
           >
             <Trash2 className="w-4 h-4 mr-2" />
-            Excluir
+            <span className="hidden sm:inline">Excluir</span>
           </Button>
         </div>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6">
         <Card>
-          <CardContent className="pt-6">
+          <CardContent className="pt-4 sm:pt-6">
             <div className="text-center">
-              <p className="text-3xl font-bold">{stats?.totalGoals}</p>
-              <p className="text-sm text-muted-foreground">Total de Metas</p>
+              <p className="text-2xl sm:text-3xl font-bold">
+                {stats?.totalGoals}
+              </p>
+              <p className="text-xs sm:text-sm text-muted-foreground">
+                Total de Metas
+              </p>
             </div>
           </CardContent>
         </Card>
         <Card>
-          <CardContent className="pt-6">
+          <CardContent className="pt-4 sm:pt-6">
             <div className="text-center">
-              <p className="text-3xl font-bold text-green-600">
+              <p className="text-2xl sm:text-3xl font-bold text-green-600">
                 {stats?.completedGoals}
               </p>
-              <p className="text-sm text-muted-foreground">Concluídas</p>
+              <p className="text-xs sm:text-sm text-muted-foreground">
+                Concluídas
+              </p>
             </div>
           </CardContent>
         </Card>
         <Card>
-          <CardContent className="pt-6">
+          <CardContent className="pt-4 sm:pt-6">
             <div className="text-center">
-              <p className="text-3xl font-bold text-blue-600">
+              <p className="text-2xl sm:text-3xl font-bold text-blue-600">
                 {stats?.inProgressGoals}
               </p>
-              <p className="text-sm text-muted-foreground">Em Andamento</p>
+              <p className="text-xs sm:text-sm text-muted-foreground">
+                Em Andamento
+              </p>
             </div>
           </CardContent>
         </Card>
         <Card>
-          <CardContent className="pt-6">
+          <CardContent className="pt-4 sm:pt-6">
             <div className="text-center">
-              <p className="text-3xl font-bold text-red-600">
+              <p className="text-2xl sm:text-3xl font-bold text-red-600">
                 {stats?.overdueGoals}
               </p>
-              <p className="text-sm text-muted-foreground">Atrasadas</p>
+              <p className="text-xs sm:text-sm text-muted-foreground">
+                Atrasadas
+              </p>
             </div>
           </CardContent>
         </Card>
@@ -323,30 +341,40 @@ export default function AreaDetail() {
           </Card>
         ) : (
           <Card>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-12">Status</TableHead>
-                  <TableHead>Título</TableHead>
-                  <TableHead>Prazo</TableHead>
-                  <TableHead>Prioridade</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {area.goals.map((goal) => (
-                  <TableRow key={goal.id} className="cursor-pointer">
-                    <TableCell>
-                      <Checkbox checked={goal.status === 'completed'} />
-                    </TableCell>
-                    <TableCell className="font-medium">{goal.title}</TableCell>
-                    <TableCell>
-                      {goal.dueDate ? formatDate(goal.dueDate) : '-'}
-                    </TableCell>
-                    <TableCell>{getPriorityBadge(goal.priority)}</TableCell>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-12">Status</TableHead>
+                    <TableHead>Título</TableHead>
+                    <TableHead className="hidden sm:table-cell">
+                      Prazo
+                    </TableHead>
+                    <TableHead className="hidden sm:table-cell">
+                      Prioridade
+                    </TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {area.goals.map((goal) => (
+                    <TableRow key={goal.id} className="cursor-pointer">
+                      <TableCell>
+                        <Checkbox checked={goal.status === 'completed'} />
+                      </TableCell>
+                      <TableCell className="font-medium">
+                        {goal.title}
+                      </TableCell>
+                      <TableCell className="hidden sm:table-cell">
+                        {goal.dueDate ? formatDate(goal.dueDate) : '-'}
+                      </TableCell>
+                      <TableCell className="hidden sm:table-cell">
+                        {getPriorityBadge(goal.priority)}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </Card>
         )}
       </div>
