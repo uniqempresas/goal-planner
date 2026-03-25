@@ -1,12 +1,20 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import MainLayout from '@/components/layout/MainLayout';
+import PrivateRoute from '@/components/PrivateRoute';
 import Login from '@/pages/Login';
+import Register from '@/pages/Register';
+import RecoverPassword from '@/pages/RecoverPassword';
 import Dashboard from '@/pages/Dashboard';
+import Profile from '@/pages/Profile';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <MainLayout />,
+    element: (
+      <PrivateRoute>
+        <MainLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         index: true,
@@ -16,7 +24,10 @@ export const router = createBrowserRouter([
         path: 'dashboard',
         element: <Dashboard />,
       },
-      // Placeholder routes - will be implemented in future sprints
+      {
+        path: 'profile',
+        element: <Profile />,
+      },
       {
         path: 'areas',
         element: (
@@ -85,5 +96,13 @@ export const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />,
+  },
+  {
+    path: '/register',
+    element: <Register />,
+  },
+  {
+    path: '/recover-password',
+    element: <RecoverPassword />,
   },
 ]);

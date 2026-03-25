@@ -78,20 +78,20 @@
 - [x] Criar contexto de Auth mockado (useAuth)
 - [x] Criar página de Login com design system
 - [x] Criar página de Registro com validação de campos
-- [ ] Criar página de Recuperação de Senha
-- [ ] Implementar proteção de rotas (Private Routes)
+- [x] Criar página de Recuperação de Senha
+- [x] Implementar proteção de rotas (Private Routes)
 - [x] Implementar logout com redirect para login
 - [x] Adicionar validação de formulários (Zod + React Hook Form)
 - [x] Criar componente de Toast para notificações (sonner)
 - [x] Criar dados mockados de usuário (faker ou JSON estático)
-- [ ] Criar página de perfil do usuário (após login)
+- [x] Criar página de perfil do usuário (após login)
 
 ### Critérios de Aceite
 
 - [x] Usuário consegue criar conta (mock)
 - [x] Usuário consegue fazer login (mock)
-- [ ] Usuário consegue recuperar senha (mock)
-- [ ] Rota protegida redireciona para login se não autenticado
+- [x] Usuário consegue recuperar senha (mock)
+- [x] Rota protegida redireciona para login se não autenticado
 - [x] State de autenticação persiste entre reloads (localStorage)
 - [x] Design responsivo e acessível
 
