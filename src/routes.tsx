@@ -8,6 +8,11 @@ import Dashboard from '@/pages/Dashboard';
 import Profile from '@/pages/Profile';
 import NotFound from '@/components/error/NotFound';
 
+// Páginas de Áreas
+import AreasList from '@/pages/areas/AreasList';
+import AreaDetail from '@/pages/areas/AreaDetail';
+import AreaFormPage from '@/pages/areas/AreaFormPage';
+
 export const router = createBrowserRouter([
   {
     path: '/login',
@@ -41,14 +46,27 @@ export const router = createBrowserRouter([
         path: 'profile',
         element: <Profile />,
       },
+      // Rotas de Áreas de Vida
       {
         path: 'areas',
-        element: (
-          <div className="p-6">
-            <h1>Áreas de Vida</h1>
-            <p>Em desenvolvimento...</p>
-          </div>
-        ),
+        children: [
+          {
+            index: true,
+            element: <AreasList />,
+          },
+          {
+            path: 'new',
+            element: <AreaFormPage />,
+          },
+          {
+            path: ':id',
+            element: <AreaDetail />,
+          },
+          {
+            path: ':id/edit',
+            element: <AreaFormPage />,
+          },
+        ],
       },
       {
         path: 'goals',
