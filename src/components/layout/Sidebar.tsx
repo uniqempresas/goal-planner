@@ -67,7 +67,7 @@ export function Sidebar({
   const content = (
     <div
       className={cn(
-        'flex flex-col h-full bg-surface border-r border-border',
+        'flex flex-col h-full bg-white dark:bg-neutral-900 border-r border-neutral-200 dark:border-neutral-800',
         mobile ? 'w-full' : collapsed ? 'w-[72px]' : 'w-[260px]',
         'transition-all duration-300 ease-in-out'
       )}

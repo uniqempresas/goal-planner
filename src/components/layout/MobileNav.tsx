@@ -48,15 +48,20 @@ export default function MobileNav() {
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const activeIndex = navItems.findIndex(
     (item) => item.href !== '#mais' && location.pathname.startsWith(item.href)
   );
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container || activeIndex === -1) return;
+    if (!isMounted || !containerRef.current || activeIndex === -1) return;
 
+    const container = containerRef.current;
     const itemWidth = 64;
     const containerWidth = container.clientWidth;
     const scrollPos =
@@ -66,7 +71,7 @@ export default function MobileNav() {
       left: Math.max(0, scrollPos),
       behavior: 'smooth',
     });
-  }, [activeIndex]);
+  }, [activeIndex, isMounted]);
 
   const handleNavigation = (href: string) => {
     if (href === '#mais') {
@@ -78,7 +83,7 @@ export default function MobileNav() {
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 h-16 bg-background border-t border-border z-50 lg:hidden"
+      className="fixed bottom-0 left-0 right-0 h-16 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800 z-50 lg:hidden"
       role="navigation"
       aria-label="Navegação principal"
     >
