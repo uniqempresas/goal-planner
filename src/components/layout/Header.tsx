@@ -57,7 +57,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
         </div>
 
         {/* Right Actions */}
-        <div className="flex items-center gap-2 relative">
+        <div className="flex items-center gap-2 relative ml-auto">
           <Button variant="ghost" size="icon" className="hidden sm:flex">
             <Bell className="h-5 w-5" />
           </Button>
