@@ -97,7 +97,7 @@
 
 ### Dependências
 
-- [ ] Sprint 1 concluída
+- [x] Sprint 1 concluída
 
 ---
 
@@ -107,28 +107,28 @@
 
 ### Tasks
 
-- [ ] Implementar Header com logo, busca, toggle tema, avatar
-- [ ] Implementar Sidebar desktop com navegação completa
-- [ ] Implementar Menu Mobile Inferior com 5 módulos
-- [ ] Implementar scroll horizontal no menu mobile (2 esquerda, 2 direita, centro)
-- [ ] Criar sub-menu "Mais" com Sheet (shadcn)
-- [ ] Implementar tema escuro (Dark Mode) base
-- [ ] Criar componente de Loading/Skeleton
-- [ ] Implementar transição entre páginas
-- [ ] Criar 404 Page e Error Boundary
+- [x] Implementar Header com logo, busca, toggle tema, avatar
+- [x] Implementar Sidebar desktop com navegação completa
+- [x] Implementar Menu Mobile Inferior com 5 módulos
+- [x] Implementar scroll horizontal no menu mobile (2 esquerda, 2 direita, centro)
+- [x] Criar sub-menu "Mais" com Sheet (shadcn)
+- [x] Implementar tema escuro (Dark Mode) base
+- [x] Criar componente de Loading/Skeleton
+- [x] Implementar transição entre páginas
+- [x] Criar 404 Page e Error Boundary
 - [ ] Adicionar animações de transição (Framer Motion)
 
 ### Critérios de Aceite
 
-- [ ] Layout responsivo (desktop e mobile)
-- [ ] Menu inferior funcional com scroll horizontal
-- [ ] Dark Mode toggle funcionando
-- [ ] Transições suaves entre páginas
-- [ ] 404 e error handling funcionando
+- [x] Layout responsivo (desktop e mobile)
+- [x] Menu inferior funcional com scroll horizontal
+- [x] Dark Mode toggle funcionando
+- [x] Transições suaves entre páginas
+- [x] 404 e error handling funcionando
 
 ### Dependências
 
-- [ ] Sprint 2 concluída
+- [x] Sprint 2 concluída
 
 ---
 

@@ -2,9 +2,12 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
   Target,
-  Calendar,
-  FileText,
   Trophy,
+  Calendar,
+  CalendarDays,
+  BarChart3,
+  Award,
+  FileText,
   Settings,
   ChevronLeft,
   ChevronRight,
@@ -12,39 +15,61 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
 
 interface SidebarProps {
   isOpen?: boolean;
   onClose?: () => void;
   mobile?: boolean;
+  collapsed?: boolean;
+  onToggle?: () => void;
 }
 
 const navItems = [
-  { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-  { href: '/areas', icon: Target, label: 'Áreas de Vida' },
-  { href: '/goals', icon: Target, label: 'Metas' },
-  { href: '/agenda', icon: Calendar, label: 'Agenda' },
-  { href: '/weekly', icon: FileText, label: 'Planejamento' },
-  { href: '/reviews', icon: FileText, label: 'Revisões' },
-  { href: '/achievements', icon: Trophy, label: 'Conquistas' },
-  { href: '/settings', icon: Settings, label: 'Configurações' },
+  {
+    id: 'dashboard',
+    href: '/dashboard',
+    icon: LayoutDashboard,
+    label: 'Dashboard',
+  },
+  { id: 'areas', href: '/areas', icon: Target, label: 'Áreas de Vida' },
+  { id: 'metas', href: '/goals', icon: Trophy, label: 'Metas' },
+  { id: 'agenda', href: '/agenda', icon: Calendar, label: 'Agenda' },
+  {
+    id: 'semanal',
+    href: '/weekly',
+    icon: CalendarDays,
+    label: 'Plano Semanal',
+  },
+  { id: 'revisoes', href: '/reviews', icon: BarChart3, label: 'Revisões' },
+  { id: 'conquistas', href: '/achievements', icon: Award, label: 'Conquistas' },
+  { id: 'templates', href: '/templates', icon: FileText, label: 'Templates' },
+  {
+    id: 'configuracoes',
+    href: '/settings',
+    icon: Settings,
+    label: 'Configurações',
+  },
 ];
 
 export function Sidebar({
   isOpen = true,
   onClose,
   mobile = false,
+  collapsed = false,
+  onToggle,
 }: SidebarProps) {
   const location = useLocation();
-  const [collapsed, setCollapsed] = useState(false);
+
+  const isActive = (href: string) => {
+    return location.pathname === href;
+  };
 
   const content = (
     <div
       className={cn(
-        'flex flex-col h-full bg-white dark:bg-neutral-900 border-r border-neutral-200 dark:border-neutral-800',
-        collapsed ? 'w-16' : 'w-64',
-        mobile && 'w-full'
+        'flex flex-col h-full bg-surface border-r border-border',
+        mobile ? 'w-full' : collapsed ? 'w-[72px]' : 'w-[260px]',
+        'transition-all duration-300 ease-in-out'
       )}
     >
       {/* Mobile Close Button */}
@@ -56,49 +81,96 @@ export function Sidebar({
         </div>
       )}
 
-      {/* Navigation */}
-      <nav className="flex-1 space-y-1 p-2">
-        {navItems.map((item) => {
-          const isActive = location.pathname === item.href;
-          const Icon = item.icon;
+      {/* Logo - Desktop only */}
+      {!mobile && (
+        <div
+          className={cn(
+            'h-10 flex items-center justify-center border-b border-border',
+            collapsed ? 'px-2' : 'px-3'
+          )}
+        >
+          {collapsed ? (
+            <span className="text-xl font-bold text-amber-500">GP</span>
+          ) : (
+            <span className="text-lg font-bold text-amber-500">
+              Goal Planner
+            </span>
+          )}
+        </div>
+      )}
 
-          return (
-            <Link
-              key={item.href}
-              to={item.href}
-              onClick={mobile ? onClose : undefined}
-              className={cn(
-                'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
-                isActive
-                  ? 'bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-100'
-                  : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800',
-                collapsed && 'justify-center'
-              )}
-            >
-              <Icon className="h-5 w-5 flex-shrink-0" />
-              {!collapsed && <span>{item.label}</span>}
-            </Link>
-          );
-        })}
+      {/* Navigation */}
+      <nav className="flex-1 py-4 px-3 overflow-y-auto">
+        <ul className="space-y-1">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const active = isActive(item.href);
+
+            return (
+              <li key={item.id}>
+                <Link
+                  to={item.href}
+                  onClick={mobile ? onClose : undefined}
+                  className={cn(
+                    'flex items-center gap-3 px-3 py-2.5 rounded-lg',
+                    'transition-colors duration-200',
+                    'focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2',
+                    active
+                      ? 'bg-amber-50 text-amber-600'
+                      : 'text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900',
+                    collapsed ? 'justify-center' : '',
+                    mobile && 'text-base py-3'
+                  )}
+                  title={collapsed ? item.label : undefined}
+                  aria-current={active ? 'page' : undefined}
+                >
+                  <Icon
+                    className={cn(
+                      'w-5 h-5 flex-shrink-0',
+                      active ? 'text-amber-500' : 'text-neutral-500'
+                    )}
+                  />
+                  {!collapsed && (
+                    <span
+                      className={cn(
+                        'text-sm font-medium',
+                        active && 'font-semibold'
+                      )}
+                    >
+                      {item.label}
+                    </span>
+                  )}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       </nav>
 
       {/* Collapse Button - Desktop only */}
       {!mobile && (
-        <div className="p-2 border-t border-neutral-200 dark:border-neutral-800">
-          <Button
-            variant="ghost"
-            className={cn('w-full', collapsed ? 'justify-center' : '')}
-            onClick={() => setCollapsed(!collapsed)}
+        <div className="p-3 border-t border-border">
+          <button
+            onClick={onToggle}
+            className={cn(
+              'flex items-center gap-3 px-3 py-2.5 rounded-lg',
+              'text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900',
+              'transition-colors duration-200',
+              'w-full',
+              collapsed ? 'justify-center' : ''
+            )}
+            aria-expanded={!collapsed}
+            aria-label={collapsed ? 'Expandir sidebar' : 'Colapsar sidebar'}
           >
             {collapsed ? (
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="w-5 h-5" />
             ) : (
               <>
-                <ChevronLeft className="h-4 w-4 mr-2" />
-                <span>Recolher</span>
+                <ChevronLeft className="w-5 h-5" />
+                <span className="text-sm">Colapsar</span>
               </>
             )}
-          </Button>
+          </button>
         </div>
       )}
     </div>
@@ -126,8 +198,14 @@ export function Sidebar({
 }
 
 // Desktop Sidebar wrapper
-export function DesktopSidebar() {
-  return <Sidebar />;
+export function DesktopSidebar({
+  collapsed = false,
+  onToggle,
+}: {
+  collapsed: boolean;
+  onToggle?: () => void;
+}) {
+  return <Sidebar collapsed={collapsed} onToggle={onToggle} />;
 }
 
 // Mobile Sidebar wrapper

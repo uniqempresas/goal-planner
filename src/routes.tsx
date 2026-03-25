@@ -6,6 +6,8 @@ import Register from '@/pages/Register';
 import RecoverPassword from '@/pages/RecoverPassword';
 import Dashboard from '@/pages/Dashboard';
 import Profile from '@/pages/Profile';
+import NotFound from '@/components/error/NotFound';
+import ErrorBoundary from '@/components/error/ErrorBoundary';
 
 export const router = createBrowserRouter([
   {
@@ -83,10 +85,47 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: 'templates',
+        element: (
+          <div className="p-6">
+            <h1>Templates</h1>
+            <p>Em desenvolvimento...</p>
+          </div>
+        ),
+      },
+      {
         path: 'settings',
         element: (
           <div className="p-6">
             <h1>Configurações</h1>
+            <p>Em desenvolvimento...</p>
+          </div>
+        ),
+      },
+      // Rotas placeholder para o header
+      {
+        path: 'perfil',
+        element: (
+          <div className="p-6">
+            <h1>Perfil</h1>
+            <p>Em desenvolvimento...</p>
+          </div>
+        ),
+      },
+      {
+        path: 'configuracoes',
+        element: (
+          <div className="p-6">
+            <h1>Configurações</h1>
+            <p>Em desenvolvimento...</p>
+          </div>
+        ),
+      },
+      {
+        path: 'notificacoes',
+        element: (
+          <div className="p-6">
+            <h1>Notificações</h1>
             <p>Em desenvolvimento...</p>
           </div>
         ),
@@ -104,5 +143,14 @@ export const router = createBrowserRouter([
   {
     path: '/recover-password',
     element: <RecoverPassword />,
+  },
+  // Rota catch-all para 404 (DEVE SER A ÚLTIMA ROTA)
+  {
+    path: '*',
+    element: (
+      <ErrorBoundary>
+        <NotFound />
+      </ErrorBoundary>
+    ),
   },
 ]);
