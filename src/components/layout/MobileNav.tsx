@@ -24,7 +24,7 @@ interface NavItem {
 const navItems: NavItem[] = [
   { id: 'dashboard', label: 'Início', icon: Home, href: '/dashboard' },
   { id: 'areas', label: 'Áreas', icon: Target, href: '/areas' },
-  { id: 'goals', label: 'Metas', icon: Trophy, href: '/goals' },
+  { id: 'goals', label: 'Metas', icon: Trophy, href: '/metas/grandes' },
   { id: 'agenda', label: 'Agenda', icon: Calendar, href: '/agenda' },
   { id: 'mais', label: 'Mais', icon: MoreHorizontal, href: '#mais' },
 ];
