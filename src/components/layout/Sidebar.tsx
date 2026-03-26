@@ -13,16 +13,10 @@ import {
   ChevronLeft,
   ChevronRight,
   X,
-  ChevronDown,
   User,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from '@/components/ui/dropdown-menu';
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -44,6 +38,7 @@ const navItems = [
     id: 'metas',
     label: 'Metas',
     icon: Trophy,
+    isDropdown: true,
     items: [
       { href: '/metas/grandes', label: 'Metas Grandes' },
       { href: '/metas/anual', label: 'Metas Anuais' },
@@ -132,64 +127,67 @@ export function Sidebar({
           {navItems.map((item) => {
             const Icon = item.icon;
             // Check if item has sub-items
-            if ('items' in item && item.items) {
+            if ('isDropdown' in item && item.isDropdown && item.items) {
               // It's a parent item with dropdown
               const isOpen = openDropdown === item.id;
               return (
-                <li key={item.id}>
-                  <DropdownMenu
-                    open={isOpen}
-                    onOpenChange={(open) =>
-                      setOpenDropdown(open ? item.id : null)
+                <li key={item.id} className="relative">
+                  <button
+                    onClick={() =>
+                      setOpenDropdown(openDropdown === item.id ? null : item.id)
                     }
+                    className={cn(
+                      'flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg w-full',
+                      'transition-colors duration-200',
+                      'text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900',
+                      collapsed ? 'justify-center' : '',
+                      mobile && 'text-base py-3'
+                    )}
+                    title={collapsed ? item.label : undefined}
                   >
-                    <button
-                      onClick={() =>
-                        setOpenDropdown(
-                          openDropdown === item.id ? null : item.id
-                        )
-                      }
-                      className={cn(
-                        'flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg w-full',
-                        'transition-colors duration-200',
-                        'text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900',
-                        collapsed ? 'justify-center' : '',
-                        mobile && 'text-base py-3'
-                      )}
-                      title={collapsed ? item.label : undefined}
-                    >
-                      <div className="flex items-center gap-3">
-                        <Icon className="w-5 h-5 flex-shrink-0 text-neutral-500" />
-                        {!collapsed && (
-                          <span className="text-sm font-medium">
-                            {item.label}
-                          </span>
-                        )}
-                      </div>
+                    <div className="flex items-center gap-3">
+                      <Icon className="w-5 h-5 flex-shrink-0 text-neutral-500" />
                       {!collapsed && (
-                        <ChevronDown className="w-4 h-4 text-neutral-400" />
+                        <span className="text-sm font-medium">
+                          {item.label}
+                        </span>
                       )}
-                    </button>
-                    <DropdownMenuContent align="start" className="w-56">
+                    </div>
+                    {!collapsed && (
+                      <span className="text-xs text-neutral-400">
+                        {isOpen ? '▲' : '▼'}
+                      </span>
+                    )}
+                  </button>
+
+                  {/* Custom Dropdown Content */}
+                  {isOpen && !collapsed && (
+                    <div className="ml-2 mt-1 space-y-1 border-l-2 border-neutral-200 pl-2">
                       {item.items.map((subItem) => (
-                        <DropdownMenuItem key={subItem.href}>
-                          <Link to={subItem.href} className="w-full">
-                            {subItem.label}
-                          </Link>
-                        </DropdownMenuItem>
+                        <Link
+                          key={subItem.href}
+                          to={subItem.href}
+                          className={cn(
+                            'block px-3 py-2 rounded-md text-sm text-neutral-600 hover:bg-neutral-100 hover:text-amber-600',
+                            isActive(subItem.href) &&
+                              'text-amber-600 font-medium bg-amber-50'
+                          )}
+                        >
+                          {subItem.label}
+                        </Link>
                       ))}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                    </div>
+                  )}
                 </li>
               );
             }
 
             // Standard item (single link)
-            const active = isActive(item.href);
+            const active = isActive(item.href || '');
             return (
               <li key={item.id}>
                 <Link
-                  to={item.href}
+                  to={item.href || '/'}
                   onClick={mobile ? onClose : undefined}
                   className={cn(
                     'flex items-center gap-3 px-3 py-2.5 rounded-lg',
