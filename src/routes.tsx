@@ -16,6 +16,8 @@ import AreaFormPage from '@/pages/areas/AreaFormPage';
 // Páginas de Metas
 import { GoalsList } from '@/pages/goals/GoalsList';
 import { GoalDetail } from '@/pages/goals/GoalDetail';
+import GoalCreate from '@/pages/goals/GoalCreate';
+import GoalEdit from '@/pages/goals/GoalEdit';
 
 export const router = createBrowserRouter([
   {
@@ -89,11 +91,15 @@ export const router = createBrowserRouter([
               },
               {
                 path: 'criar',
-                element: <div>Criar Meta Grand (Em desenvolvimento)</div>,
+                element: <GoalCreate />,
               },
               {
                 path: ':id',
                 element: <GoalDetail />,
+              },
+              {
+                path: ':id/editar',
+                element: <GoalEdit />,
               },
             ],
           },
@@ -104,6 +110,18 @@ export const router = createBrowserRouter([
                 index: true,
                 element: <GoalsList />,
               },
+              {
+                path: 'criar',
+                element: <GoalCreate />,
+              },
+              {
+                path: ':id',
+                element: <GoalDetail />,
+              },
+              {
+                path: ':id/editar',
+                element: <GoalEdit />,
+              },
             ],
           },
           {
@@ -112,6 +130,18 @@ export const router = createBrowserRouter([
               {
                 index: true,
                 element: <GoalsList />,
+              },
+              {
+                path: 'criar',
+                element: <GoalCreate />,
+              },
+              {
+                path: ':id',
+                element: <GoalDetail />,
+              },
+              {
+                path: ':id/editar',
+                element: <GoalEdit />,
               },
             ],
           },
@@ -122,6 +152,18 @@ export const router = createBrowserRouter([
                 index: true,
                 element: <GoalsList />,
               },
+              {
+                path: 'criar',
+                element: <GoalCreate />,
+              },
+              {
+                path: ':id',
+                element: <GoalDetail />,
+              },
+              {
+                path: ':id/editar',
+                element: <GoalEdit />,
+              },
             ],
           },
           {
@@ -130,6 +172,18 @@ export const router = createBrowserRouter([
               {
                 index: true,
                 element: <GoalsList />,
+              },
+              {
+                path: 'criar',
+                element: <GoalCreate />,
+              },
+              {
+                path: ':id',
+                element: <GoalDetail />,
+              },
+              {
+                path: ':id/editar',
+                element: <GoalEdit />,
               },
             ],
           },

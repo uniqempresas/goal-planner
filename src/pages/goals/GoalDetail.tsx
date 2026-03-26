@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
   Calendar,
   Edit,
@@ -14,8 +14,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export function GoalDetail() {
   const { id } = useParams<{ id: string }>();
-  const { getGoalById, getChildGoals, getBreadcrumbs, calculateProgress } =
-    useGoals();
+  const navigate = useNavigate();
+  const {
+    getGoalById,
+    getChildGoals,
+    getBreadcrumbs,
+    calculateProgress,
+    deleteGoal,
+  } = useGoals();
 
   const goal = getGoalById(id || '');
 
@@ -43,13 +49,30 @@ export function GoalDetail() {
     daily: 'Tarefa Diária',
   };
 
+  // Map level to URL path
+  const levelPaths: Record<string, string> = {
+    grand: 'grandes',
+    annual: 'anual',
+    monthly: 'mensal',
+    weekly: 'semanal',
+    daily: 'diarias',
+  };
+
+  const handleDelete = async () => {
+    if (window.confirm('Tem certeza que deseja excluir esta meta?')) {
+      await deleteGoal(goal.id);
+      navigate(`/metas/${levelPaths[goal.level]}`);
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Breadcrumbs */}
       <Breadcrumbs
-        items={breadcrumbs
-          .slice(1)
-          .map((b) => ({ label: b.title, href: `/metas/grandes/${b.id}` }))}
+        items={breadcrumbs.slice(1).map((b) => ({
+          label: b.title,
+          href: `/metas/${levelPaths[b.level]}/${b.id}`,
+        }))}
       />
 
       {/* Header */}
@@ -71,10 +94,17 @@ export function GoalDetail() {
           )}
         </div>
         <div className="flex gap-2">
-          <button className="rounded-md border border-slate-200 bg-white p-2 text-slate-600 hover:bg-slate-50">
+          <Link
+            to={`/metas/${levelPaths[goal.level]}/${goal.id}/editar`}
+            className="rounded-md border border-slate-200 bg-white p-2 text-slate-600 hover:bg-slate-50"
+          >
             <Edit className="h-5 w-5" />
-          </button>
-          <button className="rounded-md border border-slate-200 bg-white p-2 text-red-600 hover:bg-red-50">
+          </Link>
+
+          <button
+            className="rounded-md border border-slate-200 bg-white p-2 text-red-600 hover:bg-red-50"
+            onClick={handleDelete}
+          >
             <Trash2 className="h-5 w-5" />
           </button>
         </div>

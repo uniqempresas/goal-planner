@@ -58,3 +58,17 @@ export const AREA_VALIDATION = {
     maxLength: 500,
   },
 } as const;
+
+// Limites de validação para Metas
+export const GOAL_VALIDATION = {
+  title: {
+    minLength: 3,
+    maxLength: 200,
+  },
+  focusingQuestion: {
+    maxLength: 300,
+  },
+  description: {
+    maxLength: 1000,
+  },
+} as const;
