@@ -205,14 +205,34 @@ export function ParentGoalSelector({
       </Dialog>
 
       {selectedGoal && (
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={handleClear}
-          className="text-xs text-muted-foreground h-auto py-1 px-2 hover:text-destructive"
-        >
-          Limpar seleção
-        </Button>
+        <>
+          {/* Parent Mini Card */}
+          <div className="mt-4 p-3 rounded-lg border bg-card text-card-foreground shadow-sm flex items-center gap-3">
+            <div
+              className="w-3 h-3 rounded-full shrink-0"
+              style={{ backgroundColor: selectedArea?.color }}
+            />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium truncate">
+                {selectedGoal.title}
+              </p>
+              <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
+                <span>{selectedArea?.name}</span>
+                <span>•</span>
+                <span>{selectedGoal.progress}%</span>
+              </div>
+              <Progress value={selectedGoal.progress} className="h-1 mt-2" />
+            </div>
+          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleClear}
+            className="text-xs text-muted-foreground h-auto py-1 px-2 hover:text-destructive mt-1"
+          >
+            Limpar seleção
+          </Button>
+        </>
       )}
     </div>
   );

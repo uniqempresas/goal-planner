@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { GoalForm } from '@/components/goals/GoalForm';
 import { useGoals } from '@/hooks/useGoals';
@@ -17,6 +18,42 @@ const levelTitles: Record<string, string> = {
   mensal: 'Meta Mensal',
   semanal: 'Meta Semanal',
   diarias: 'Tarefa Diária',
+};
+
+const SMART_DATES: Record<
+  GoalLevel,
+  (start: Date) => { start: string; due: string }
+> = {
+  grand: (start) => ({
+    start: start.toISOString().split('T')[0],
+    due: new Date(start.getFullYear() + 1, start.getMonth(), start.getDate())
+      .toISOString()
+      .split('T')[0],
+  }),
+  annual: (start) => ({
+    start: start.toISOString().split('T')[0],
+    due: new Date(start.getFullYear() + 1, start.getMonth(), start.getDate())
+      .toISOString()
+      .split('T')[0],
+  }),
+  monthly: (start) => ({
+    start: start.toISOString().split('T')[0],
+    due: new Date(start.getFullYear(), start.getMonth() + 1, start.getDate())
+      .toISOString()
+      .split('T')[0],
+  }),
+  weekly: (start) => ({
+    start: start.toISOString().split('T')[0],
+    due: new Date(start.getFullYear(), start.getMonth(), start.getDate() + 7)
+      .toISOString()
+      .split('T')[0],
+  }),
+  daily: (start) => ({
+    start: start.toISOString().split('T')[0],
+    due: new Date(start.getFullYear(), start.getMonth(), start.getDate() + 1)
+      .toISOString()
+      .split('T')[0],
+  }),
 };
 
 export default function GoalCreate() {
@@ -42,6 +79,14 @@ export default function GoalCreate() {
     pageTitle = levelTitles[levelFromUrl] || 'Meta';
   }
 
+  const smartDates = useMemo(() => {
+    const start = new Date();
+    const calculated = SMART_DATES[currentLevel]?.(start);
+    return calculated
+      ? { startDate: calculated.start, dueDate: calculated.due }
+      : undefined;
+  }, [currentLevel]);
+
   const handleSubmit = async (data: any) => {
     await createGoal(data);
     // Navigate back to the list of that level
@@ -57,7 +102,11 @@ export default function GoalCreate() {
         </p>
       </div>
 
-      <GoalForm onSubmit={handleSubmit} level={currentLevel} />
+      <GoalForm
+        onSubmit={handleSubmit}
+        level={currentLevel}
+        initialDates={smartDates}
+      />
     </div>
   );
 }
