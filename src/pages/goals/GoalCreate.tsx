@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { GoalForm } from '@/components/goals/GoalForm';
 import { useGoals } from '@/hooks/useGoals';
 import type { GoalLevel } from '@/types';
@@ -20,17 +20,32 @@ const levelTitles: Record<string, string> = {
 };
 
 export default function GoalCreate() {
-  const { level } = useParams<{ level: string }>();
+  const { level: paramLevel } = useParams<{ level: string }>();
+  const location = useLocation();
   const navigate = useNavigate();
   const { createGoal } = useGoals();
 
-  const currentLevel = level ? levelMap[level] : 'grand';
-  const pageTitle = level ? levelTitles[level] : 'Meta';
+  // Extract level from URL path if param is missing
+  const pathSegments = location.pathname.split('/').filter(Boolean);
+  // ["metas", "anual", "criar"]
+
+  let levelFromUrl = paramLevel;
+  if (!levelFromUrl && pathSegments.length >= 2) {
+    levelFromUrl = pathSegments[1]; // "anual", "grandes", etc.
+  }
+
+  let currentLevel: GoalLevel = 'grand';
+  let pageTitle = 'Meta';
+
+  if (levelFromUrl) {
+    currentLevel = levelMap[levelFromUrl] || 'grand';
+    pageTitle = levelTitles[levelFromUrl] || 'Meta';
+  }
 
   const handleSubmit = async (data: any) => {
     await createGoal(data);
     // Navigate back to the list of that level
-    navigate(`/metas/${level}`);
+    navigate(`/metas/${levelFromUrl}`);
   };
 
   return (
