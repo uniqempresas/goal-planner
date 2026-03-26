@@ -7,16 +7,66 @@ export type GoalStatus = 'pending' | 'in_progress' | 'completed' | 'overdue';
 // Prioridade da meta
 export type GoalPriority = 'low' | 'medium' | 'high';
 
+// Nível da meta hierárquica
+export type GoalLevel = 'grand' | 'annual' | 'monthly' | 'weekly' | 'daily';
+
+// Métrica SMART
+export interface Metric {
+  id: string;
+  indicator: string;
+  current: number;
+  target: number;
+  unit: string;
+}
+
+// Marco (Milestone)
+export interface Milestone {
+  id: string;
+  title: string;
+  completedAt?: string;
+  dueDate: string;
+  status: GoalStatus;
+}
+
 // Meta associada a uma área
 export interface Goal {
   id: string;
   title: string;
+  level: GoalLevel;
+  parentId: string | null;
+  areaId: string;
+
+  // Conteúdo
   description?: string;
+  focusingQuestion?: string;
+
+  // SMART
+  metrics?: Metric[];
+
+  // Viabilidade/Relevância
+  viabilityScore?: number; // 1-10
+  relevanceScore?: number; // 1-10
+
+  // Datas
+  startDate?: string;
+  dueDate: string;
+  completedAt?: string;
+
+  // Status
   status: GoalStatus;
   priority: GoalPriority;
-  dueDate?: string;
-  completedAt?: string;
-  areaId: string;
+
+  // Especial
+  isOneThing: boolean;
+  progress: number; // 0-100 (Calculated)
+
+  // Contagem de filhos (Denormalizada)
+  childrenCount?: number;
+  completedChildrenCount?: number;
+
+  // Marcos
+  milestones?: Milestone[];
+
   createdAt: string;
   updatedAt: string;
 }
@@ -55,3 +105,7 @@ export interface AreaStats {
   overdueGoals: number;
   progress: number;
 }
+
+// Inputs para Goal
+export type CreateGoalInput = Omit<Goal, 'id' | 'createdAt' | 'updatedAt'>;
+export type UpdateGoalInput = Partial<CreateGoalInput>;

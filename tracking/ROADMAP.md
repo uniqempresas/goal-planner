@@ -138,31 +138,31 @@
 
 ### Tasks
 
-- [ ] Criar mock data para Áreas de Vida
-- [ ] Criar hook customizado useAreas (mock)
-- [ ] Criar página de listagem de Áreas de Vida
-- [ ] Criar componente de Card para cada Área
-- [ ] Implementar modal de criação de nova Área
-- [ ] Implementar modal de edição de Área
-- [ ] Implementar exclusão de Área com confirmação
-- [ ] Criar página de detalhes de uma Área
+- [x] Criar mock data para Áreas de Vida
+- [x] Criar hook customizado useAreas (mock)
+- [x] Criar página de listagem de Áreas de Vida
+- [x] Criar componente de Card para cada Área
+- [x] Implementar modal de criação de nova Área
+- [x] Implementar modal de edição de Área
+- [x] Implementar exclusão de Área com confirmação
+- [x] Criar página de detalhes de uma Área
 - [ ] Implementar ordenação de Áreas (drag & drop)
-- [ ] Adicionar cor personalizada para cada Área
-- [ ] Implementar seleção de ícones para Áreas
+- [x] Adicionar cor personalizada para cada Área
+- [x] Implementar seleção de ícones para Áreas
 - [ ] Criar estado vazio (empty state)
 
 ### Critérios de Aceite
 
-- [ ] Usuário consegue criar uma nova Área
-- [ ] Usuário consegue editar uma Área existente
-- [ ] Usuário consegue excluir uma Área
+- [x] Usuário consegue criar uma nova Área
+- [x] Usuário consegue editar uma Área existente
+- [x] Usuário consegue excluir uma Área
 - [ ] Áreas aparecem em ordem de prioridade
-- [ ] Cada Área tem cor e ícone distintos
+- [x] Cada Área tem cor e ícone distintos
 - [ ] Interface responsiva e fluida
 
 ### Dependências
 
-- [ ] Sprint 3 concluída
+- [x] Sprint 3 concluída
 
 ---
 

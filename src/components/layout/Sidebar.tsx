@@ -32,7 +32,7 @@ const navItems = [
     label: 'Dashboard',
   },
   { id: 'areas', href: '/areas', icon: Target, label: 'Áreas de Vida' },
-  { id: 'metas', href: '/goals', icon: Trophy, label: 'Metas' },
+  { id: 'metas', href: '/metas/grandes', icon: Trophy, label: 'Metas' },
   { id: 'agenda', href: '/agenda', icon: Calendar, label: 'Agenda' },
   {
     id: 'semanal',

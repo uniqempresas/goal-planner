@@ -13,6 +13,10 @@ import AreasList from '@/pages/areas/AreasList';
 import AreaDetail from '@/pages/areas/AreaDetail';
 import AreaFormPage from '@/pages/areas/AreaFormPage';
 
+// Páginas de Metas
+import { GoalsList } from '@/pages/goals/GoalsList';
+import { GoalDetail } from '@/pages/goals/GoalDetail';
+
 export const router = createBrowserRouter([
   {
     path: '/login',
@@ -68,14 +72,68 @@ export const router = createBrowserRouter([
           },
         ],
       },
+      // Rotas de Metas Hierárquicas
       {
-        path: 'goals',
-        element: (
-          <div className="p-6">
-            <h1>Metas</h1>
-            <p>Em desenvolvimento...</p>
-          </div>
-        ),
+        path: 'metas',
+        children: [
+          {
+            index: true,
+            element: <Navigate to="/metas/grandes" replace />,
+          },
+          {
+            path: 'grandes',
+            children: [
+              {
+                index: true,
+                element: <GoalsList />,
+              },
+              {
+                path: 'criar',
+                element: <div>Criar Meta Grand (Em desenvolvimento)</div>,
+              },
+              {
+                path: ':id',
+                element: <GoalDetail />,
+              },
+            ],
+          },
+          {
+            path: 'anual',
+            children: [
+              {
+                index: true,
+                element: <GoalsList />,
+              },
+            ],
+          },
+          {
+            path: 'mensal',
+            children: [
+              {
+                index: true,
+                element: <GoalsList />,
+              },
+            ],
+          },
+          {
+            path: 'semanal',
+            children: [
+              {
+                index: true,
+                element: <GoalsList />,
+              },
+            ],
+          },
+          {
+            path: 'diarias',
+            children: [
+              {
+                index: true,
+                element: <GoalsList />,
+              },
+            ],
+          },
+        ],
       },
       {
         path: 'agenda',
