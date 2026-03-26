@@ -162,6 +162,10 @@ export function GoalForm({
 
   const handleFormSubmit = async (data: GoalFormData) => {
     setShowSuccess(true);
+
+    // Delay to allow success animation to be seen before redirecting
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     await onSubmit({
       ...data,
       level: level,
