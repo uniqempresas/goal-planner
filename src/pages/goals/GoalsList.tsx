@@ -1,13 +1,26 @@
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import {
+  Link,
+  useParams,
+  useSearchParams,
+  useLocation,
+} from 'react-router-dom';
 import { Plus, Filter } from 'lucide-react';
 import { useGoals } from '@/hooks/useGoals';
 import { GoalCard } from '@/components/goals/GoalCard';
 import type { GoalLevel } from '@/types';
 
 export function GoalsList() {
-  const { level } = useParams(); // This will be "grandes", "anual", etc.
+  const { level: paramLevel } = useParams(); // This will be "grandes", "anual", etc.
+  const location = useLocation();
   const [searchParams] = useSearchParams();
   const areaFilter = searchParams.get('area');
+
+  // Extract level from URL path
+  const pathSegments = location.pathname.split('/').filter(Boolean);
+  let level = paramLevel;
+  if (!level && pathSegments.length >= 2) {
+    level = pathSegments[1]; // "anual", "grandes", "semanal", etc.
+  }
 
   // Map URL params to GoalLevel
   const levelMap: Record<string, GoalLevel> = {

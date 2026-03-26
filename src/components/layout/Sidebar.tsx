@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -12,9 +13,16 @@ import {
   ChevronLeft,
   ChevronRight,
   X,
+  ChevronDown,
+  User,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from '@/components/ui/dropdown-menu';
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -32,13 +40,24 @@ const navItems = [
     label: 'Dashboard',
   },
   { id: 'areas', href: '/areas', icon: Target, label: 'Áreas de Vida' },
-  { id: 'metas', href: '/metas/grandes', icon: Trophy, label: 'Metas' },
+  {
+    id: 'metas',
+    label: 'Metas',
+    icon: Trophy,
+    items: [
+      { href: '/metas/grandes', label: 'Metas Grandes' },
+      { href: '/metas/anual', label: 'Metas Anuais' },
+      { href: '/metas/mensal', label: 'Metas Mensais' },
+      { href: '/metas/semanal', label: 'Metas Semanais' },
+      { href: '/metas/diarias', label: 'Tarefas Diárias' },
+    ],
+  },
   { id: 'agenda', href: '/agenda', icon: Calendar, label: 'Agenda' },
   {
     id: 'semanal',
-    href: '/weekly',
+    href: '/metas/semanal',
     icon: CalendarDays,
-    label: 'Plano Semanal',
+    label: 'Planejamento Semanal',
   },
   { id: 'revisoes', href: '/reviews', icon: BarChart3, label: 'Revisões' },
   { id: 'conquistas', href: '/achievements', icon: Award, label: 'Conquistas' },
@@ -48,6 +67,12 @@ const navItems = [
     href: '/settings',
     icon: Settings,
     label: 'Configurações',
+  },
+  {
+    id: 'perfil',
+    href: '/profile',
+    icon: User,
+    label: 'Perfil',
   },
 ];
 
@@ -63,6 +88,8 @@ export function Sidebar({
   const isActive = (href: string) => {
     return location.pathname === href;
   };
+
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const content = (
     <div
@@ -104,8 +131,61 @@ export function Sidebar({
         <ul className="space-y-1">
           {navItems.map((item) => {
             const Icon = item.icon;
-            const active = isActive(item.href);
+            // Check if item has sub-items
+            if ('items' in item && item.items) {
+              // It's a parent item with dropdown
+              const isOpen = openDropdown === item.id;
+              return (
+                <li key={item.id}>
+                  <DropdownMenu
+                    open={isOpen}
+                    onOpenChange={(open) =>
+                      setOpenDropdown(open ? item.id : null)
+                    }
+                  >
+                    <button
+                      onClick={() =>
+                        setOpenDropdown(
+                          openDropdown === item.id ? null : item.id
+                        )
+                      }
+                      className={cn(
+                        'flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg w-full',
+                        'transition-colors duration-200',
+                        'text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900',
+                        collapsed ? 'justify-center' : '',
+                        mobile && 'text-base py-3'
+                      )}
+                      title={collapsed ? item.label : undefined}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Icon className="w-5 h-5 flex-shrink-0 text-neutral-500" />
+                        {!collapsed && (
+                          <span className="text-sm font-medium">
+                            {item.label}
+                          </span>
+                        )}
+                      </div>
+                      {!collapsed && (
+                        <ChevronDown className="w-4 h-4 text-neutral-400" />
+                      )}
+                    </button>
+                    <DropdownMenuContent align="start" className="w-56">
+                      {item.items.map((subItem) => (
+                        <DropdownMenuItem key={subItem.href}>
+                          <Link to={subItem.href} className="w-full">
+                            {subItem.label}
+                          </Link>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </li>
+              );
+            }
 
+            // Standard item (single link)
+            const active = isActive(item.href);
             return (
               <li key={item.id}>
                 <Link

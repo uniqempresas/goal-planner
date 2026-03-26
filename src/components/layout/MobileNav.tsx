@@ -11,6 +11,7 @@ import {
   Settings,
   Layout,
   LogOut,
+  User,
 } from 'lucide-react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 
@@ -19,18 +20,41 @@ interface NavItem {
   label: string;
   icon: React.ComponentType<{ className?: string }>;
   href: string;
+  hasSubmenu?: boolean;
+  submenu?: { id: string; label: string; href: string }[];
 }
 
 const navItems: NavItem[] = [
   { id: 'dashboard', label: 'Início', icon: Home, href: '/dashboard' },
   { id: 'areas', label: 'Áreas', icon: Target, href: '/areas' },
-  { id: 'goals', label: 'Metas', icon: Trophy, href: '/metas/grandes' },
+  { id: 'metas', label: 'Metas', icon: Trophy, href: '/metas/grandes' },
   { id: 'agenda', label: 'Agenda', icon: Calendar, href: '/agenda' },
   { id: 'mais', label: 'Mais', icon: MoreHorizontal, href: '#mais' },
 ];
 
+const goalLevels = [
+  { id: 'grandes', label: 'Metas Grandes', href: '/metas/grandes' },
+  { id: 'anual', label: 'Metas Anuais', href: '/metas/anual' },
+  { id: 'mensal', label: 'Metas Mensais', href: '/metas/mensal' },
+  { id: 'semanal', label: 'Metas Semanais', href: '/metas/semanal' },
+  { id: 'diarias', label: 'Tarefas Diárias', href: '/metas/diarias' },
+];
+
 const moreItems = [
-  { id: 'weekly', label: 'Semanal', icon: Calendar, href: '/weekly' },
+  {
+    id: 'metas',
+    label: 'Metas',
+    icon: Trophy,
+    href: '/metas/grandes',
+    hasSubmenu: true,
+    submenu: goalLevels,
+  },
+  {
+    id: 'weekly',
+    label: 'Planejamento',
+    icon: Calendar,
+    href: '/metas/semanal',
+  },
   { id: 'reviews', label: 'Revisões', icon: ClipboardList, href: '/reviews' },
   {
     id: 'achievements',
@@ -40,7 +64,8 @@ const moreItems = [
   },
   { id: 'settings', label: 'Configurações', icon: Settings, href: '/settings' },
   { id: 'templates', label: 'Templates', icon: Layout, href: '/templates' },
-  { id: 'sair', label: 'Sair', icon: LogOut, href: '/logout', danger: true },
+  { id: 'profile', label: 'Perfil', icon: User, href: '/profile' },
+  { id: 'sair', label: 'Sair', icon: LogOut, href: '/login', danger: true },
 ];
 
 export default function MobileNav() {
@@ -115,6 +140,33 @@ export default function MobileNav() {
                   <div className="flex flex-col gap-1">
                     {moreItems.map((subItem) => {
                       const SubIcon = subItem.icon;
+
+                      // Render item with submenu (Metas)
+                      if (subItem.hasSubmenu && subItem.submenu) {
+                        return (
+                          <div key={subItem.id} className="space-y-1">
+                            <div className="px-4 py-2 text-xs font-semibold text-neutral-500 uppercase tracking-wider">
+                              {subItem.label}
+                            </div>
+                            {subItem.submenu.map((level) => (
+                              <button
+                                key={level.id}
+                                onClick={() => {
+                                  setIsSheetOpen(false);
+                                  navigate(level.href);
+                                }}
+                                className="flex items-center gap-3 px-4 py-2 rounded-lg text-left w-full transition-colors hover:bg-neutral-100 text-neutral-700"
+                              >
+                                <SubIcon className="w-4 h-4 text-neutral-400" />
+                                <span className="text-sm font-medium">
+                                  {level.label}
+                                </span>
+                              </button>
+                            ))}
+                          </div>
+                        );
+                      }
+
                       return (
                         <button
                           key={subItem.id}
