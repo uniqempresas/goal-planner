@@ -28,8 +28,8 @@ export default function AreaFormPage() {
         await updateArea(id, data);
         navigate(`/areas/${id}`);
       } else {
-        const newArea = await createArea(data);
-        navigate(`/areas/${newArea.id}`);
+        await createArea(data);
+        navigate('/areas');
       }
     } catch (error) {
       console.error('Error saving area:', error);

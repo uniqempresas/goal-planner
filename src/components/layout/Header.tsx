@@ -152,18 +152,16 @@ export default function Header({ onMenuClick }: HeaderProps) {
           {/* Avatar + Dropdown */}
           {user && (
             <DropdownMenu>
-              <DropdownMenuTrigger>
-                <button
-                  className="flex items-center justify-center rounded-full h-9 w-9 hover:bg-accent transition-colors"
-                  aria-label="Menu do usuário"
-                >
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src={user.avatar} alt={user.name} />
-                    <AvatarFallback className="bg-primary/10 text-primary text-sm font-medium">
-                      {getInitials(user.name)}
-                    </AvatarFallback>
-                  </Avatar>
-                </button>
+              <DropdownMenuTrigger
+                className="rounded-full h-9 w-9 hover:bg-accent transition-colors cursor-pointer outline-none"
+                aria-label="Menu do usuário"
+              >
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarFallback className="bg-primary/10 text-primary text-sm font-medium">
+                    {getInitials(user.name)}
+                  </AvatarFallback>
+                </Avatar>
               </DropdownMenuTrigger>
 
               <DropdownMenuContent align="end" className="w-56">

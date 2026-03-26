@@ -12,7 +12,7 @@ import {
   Layout,
   LogOut,
 } from 'lucide-react';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 
 interface NavItem {
   id: string;
@@ -104,12 +104,13 @@ export default function MobileNav() {
                 open={isSheetOpen}
                 onOpenChange={setIsSheetOpen}
               >
-                <SheetTrigger>
-                  <button className="flex flex-col items-center justify-center min-w-[64px] h-14 px-2 rounded-lg transition-all duration-200 text-neutral-500 hover:text-neutral-700">
-                    <Icon className="w-6 h-6" />
-                    <span className="text-[10px] mt-1 font-medium">Mais</span>
-                  </button>
-                </SheetTrigger>
+                <button
+                  className="flex flex-col items-center justify-center min-w-[64px] h-14 px-2 rounded-lg transition-all duration-200 text-neutral-500 hover:text-neutral-700"
+                  onClick={() => setIsSheetOpen(true)}
+                >
+                  <Icon className="w-6 h-6" />
+                  <span className="text-[10px] mt-1 font-medium">Mais</span>
+                </button>
                 <SheetContent side="bottom" className="pb-8">
                   <div className="flex flex-col gap-1">
                     {moreItems.map((subItem) => {
