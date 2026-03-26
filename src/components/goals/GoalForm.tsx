@@ -160,11 +160,16 @@ export function GoalForm({
     setCurrentStep((prev) => Math.max(prev - 1, 1));
   };
 
-  const handleFormSubmit = async (data: GoalFormData) => {
+  const handleFormSubmit = async (_data: GoalFormData) => {
+    // Show success animation only
     setShowSuccess(true);
 
-    // Delay to allow success animation to be seen before redirecting
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    // Do NOT submit yet - wait for user to click "Continuar"
+  };
+
+  const handleSuccessConfirm = async () => {
+    // Get current form data
+    const data = watch();
 
     await onSubmit({
       ...data,
@@ -191,7 +196,10 @@ export function GoalForm({
             <h2 className="text-2xl font-bold text-green-600 mb-2">
               Meta Criada!
             </h2>
-            <p className="text-muted-foreground">Redirecting...</p>
+            <p className="text-muted-foreground mb-6">Ótimo trabalho!</p>
+            <Button onClick={handleSuccessConfirm} className="w-full">
+              Continuar
+            </Button>
           </div>
         </div>
       )}
